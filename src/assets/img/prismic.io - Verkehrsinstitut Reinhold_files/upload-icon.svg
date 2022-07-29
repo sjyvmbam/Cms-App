@@ -1,0 +1,44 @@
+<svg width="183" height="183" viewBox="0 0 183 183" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>upload</title>
+    <style>
+        #transform{
+          animation-name: rectangle1;
+          animation-duration: 2s;
+          animation-iteration-count: infinite;
+          transition-timing-function: ease-in-out;
+          transform-origin: center
+        }
+        @keyframes rectangle1 {
+            0% {
+              transform: scale(0.9)
+            }
+            50% {
+              transform: scale(1)
+            }
+            100%{
+              transform: scale(0.9)
+            }
+        }
+    </style>
+    <defs>
+        <path d="M132 74c-3.870833-18.07875-20.283333-32-40-32-15.6541667 0-29.25 8.815-36 22-16.325 1.435-29 15.14125-29 32 0 17.54125 14.5708333 32 33 32h70c14.866667 0 27-12.04 27-27 0-14.065-11.104167-25.5675-25-27z" id="b"/>
+        <filter x="-16.2%" y="-17.4%" width="132.3%" height="148.8%" filterUnits="objectBoundingBox" id="a">
+            <feOffset dy="6" in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feGaussianBlur stdDeviation="6" in="shadowOffsetOuter1" result="shadowBlurOuter1"/>
+            <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0" in="shadowBlurOuter1"/>
+        </filter>
+    </defs>
+
+    <g fill="none" fill-rule="evenodd">
+        <circle fill="#7984BE" cx="91.5" cy="91.5" r="91.5"/>
+
+        <g id="transform">
+            <g fill-rule="nonzero">
+                <use fill="#000" filter="url(#a)" xlink:href="#b"/>
+                <use fill="#FFF" fill-rule="evenodd" xlink:href="#b"/>
+            </g>
+            <path fill="#535FA3" d="M77 101h30v4H77"/>
+            <path fill="#535FA3" fill-rule="nonzero" d="M86 97h12V84h9L92 69 77 84h9"/>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,14 @@
+<div class="row" *ngIf="hasSidebar">
+    <div class="col-lg-8" [innerHTML]="pageBody">
+    </div>
+    <div class="col-xs-4">
+       <div [innerHTML]="sidebar"></div>
+    </div>
+
+
+</div>
+
+<div class="row" *ngIf="!hasSidebar">
+    <div class="col-xs-12" [innerHTML]="pageBody">
+    </div>
+</div>

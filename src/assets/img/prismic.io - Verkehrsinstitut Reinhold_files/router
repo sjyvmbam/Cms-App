@@ -1,0 +1,662 @@
+var Router = {}; (function(_root){
+var _nS = function(c,f,b){var e=c.split(f||"."),g=b||_root,d,a;for(d=0,a=e.length;d<a;d++){g=g[e[d]]=g[e[d]]||{}}return g}
+var _qS = function(items){var qs = ''; for(var i=0;i<items.length;i++) {if(items[i]) qs += (qs ? '&' : '') + items[i]}; return qs ? ('?' + qs) : ''}
+var _s = function(p,s){return p+((s===true||(s&&s.secure))?'s':'')+'://'}
+var _wA = function(r){return {ajax:function(c){c=c||{};c.url=r.url;c.type=r.method;return jQuery.ajax(c)}, method:r.method,type:r.method,url:r.url,absoluteURL: function(s){return _s('http',s)+'verkehrsinstitut-reinhold.prismic.io'+r.url},webSocketURL: function(s){return _s('ws',s)+'verkehrsinstitut-reinhold.prismic.io'+r.url}}}
+_nS('controllers.Application'); _root.controllers.Application.getTags = 
+      function() {
+      return _wA({method:"GET", url:"/" + "app/repository/tags"})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.documents = 
+      function() {
+      return _wA({method:"GET", url:"/" + "app/documents"})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.workingVersions = 
+      function(tags,maskIds,authorIds,keywords,language,page,limit) {
+      return _wA({method:"GET", url:"/" + "app/documents/working" + _qS([(function(k,vs){var l=vs&&vs.length,r=[],i=0;for(;i<l;i++){r[i]=(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,vs[i])}return r.join('&')})("tags", tags), (function(k,vs){var l=vs&&vs.length,r=[],i=0;for(;i<l;i++){r[i]=(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,vs[i])}return r.join('&')})("maskIds", maskIds), (function(k,vs){var l=vs&&vs.length,r=[],i=0;for(;i<l;i++){r[i]=(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,vs[i])}return r.join('&')})("authorIds", authorIds), (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("keywords", keywords), (language == null ? null : (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("language", language)), (page == null ? null : (function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("page", page)), (limit == null ? null : (function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("limit", limit))])})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.upcomingVersions = 
+      function(releaseId,tags,maskIds,authorIds,keywords,language,page,limit) {
+      return _wA({method:"GET", url:"/" + "app/documents/upcoming" + _qS([(function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("releaseId", releaseId), (function(k,vs){var l=vs&&vs.length,r=[],i=0;for(;i<l;i++){r[i]=(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,vs[i])}return r.join('&')})("tags", tags), (function(k,vs){var l=vs&&vs.length,r=[],i=0;for(;i<l;i++){r[i]=(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,vs[i])}return r.join('&')})("maskIds", maskIds), (function(k,vs){var l=vs&&vs.length,r=[],i=0;for(;i<l;i++){r[i]=(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,vs[i])}return r.join('&')})("authorIds", authorIds), (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("keywords", keywords), (language == null ? null : (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("language", language)), (page == null ? null : (function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("page", page)), (limit == null ? null : (function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("limit", limit))])})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.archivedVersions = 
+      function(tags,maskIds,authorIds,keywords,language,page,limit) {
+      return _wA({method:"GET", url:"/" + "app/documents/archived" + _qS([(function(k,vs){var l=vs&&vs.length,r=[],i=0;for(;i<l;i++){r[i]=(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,vs[i])}return r.join('&')})("tags", tags), (function(k,vs){var l=vs&&vs.length,r=[],i=0;for(;i<l;i++){r[i]=(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,vs[i])}return r.join('&')})("maskIds", maskIds), (function(k,vs){var l=vs&&vs.length,r=[],i=0;for(;i<l;i++){r[i]=(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,vs[i])}return r.join('&')})("authorIds", authorIds), (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("keywords", keywords), (language == null ? null : (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("language", language)), (page == null ? null : (function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("page", page)), (limit == null ? null : (function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("limit", limit))])})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.selectDocument = 
+      function(tags,maskIds,keywords,selected,context,language,fromId,fromDate,limit) {
+      return _wA({method:"GET", url:"/" + "app/documents/select" + _qS([(function(k,vs){var l=vs&&vs.length,r=[],i=0;for(;i<l;i++){r[i]=(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,vs[i])}return r.join('&')})("tags", tags), (function(k,vs){var l=vs&&vs.length,r=[],i=0;for(;i<l;i++){r[i]=(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,vs[i])}return r.join('&')})("maskIds", maskIds), (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("keywords", keywords), (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("selected", selected), (function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("context", context), (language == null ? null : (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("language", language)), (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("fromId", fromId), (fromDate == null ? null : (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("fromDate", fromDate)), (limit == null ? null : (function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("limit", limit))])})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.document = 
+      function(id,maybeVersionId,context,section) {
+      return _wA({method:"GET", url:"/" + "app/documents/" + (function(k,v) {return v})("id", id) + _qS([(function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("maybeVersionId", maybeVersionId), (function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("context", context), (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("section", section)])})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.redirectToTranslation = 
+      function(mask,contextId,langId,glid) {
+      return _wA({method:"GET", url:"/" + "app/translation/" + (function(k,v) {return v})("mask", encodeURIComponent(mask)) + "/" + (function(k,v) {return v})("contextId", encodeURIComponent(contextId)) + "/" + (function(k,v) {return v})("langId", encodeURIComponent(langId)) + _qS([(function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("glid", glid)])})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.relatedDocumentLang = 
+      function(glid,langId) {
+      return _wA({method:"GET", url:"/" + "app/related-docs/glid/" + (function(k,v) {return v})("glid", encodeURIComponent(glid)) + "/lang/" + (function(k,v) {return v})("langId", encodeURIComponent(langId))})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.updateDocument = 
+      function(id,baseVersion,context,language,force) {
+      return _wA({method:"POST", url:"/" + "app/documents/" + (function(k,v) {return v})("id", id) + "/versions/" + (function(k,v) {return v})("baseVersion", encodeURIComponent(baseVersion)) + _qS([(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("context", context), (function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("language", language), (force == null ? null : (function(k,v){return k+'='+(!!v)})("force", force))])})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.previewDocument = 
+      function(id,version) {
+      return _wA({method:"GET", url:"/" + "app/documents/" + (function(k,v) {return v})("id", id) + "/versions/" + (function(k,v) {return v})("version", version) + "/preview"})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.historyContext = 
+      function(id,base,context,selected,section) {
+      return _wA({method:"GET", url:"/" + "app/documents/" + (function(k,v) {return v})("id", id) + "/history/" + (function(k,v) {return v})("base", base) + _qS([(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("context", context), (selected == null ? null : (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("selected", selected)), (section == null ? null : (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("section", section))])})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.publish = 
+      function(id,version,context,showMore) {
+      return _wA({method:"GET", url:"/" + "app/documents/" + (function(k,v) {return v})("id", id) + "/versions/" + (function(k,v) {return v})("version", version) + "/publish" + _qS([(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("context", context), (function(k,v){return k+'='+(!!v)})("showMore", showMore)])})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.writingOptions = 
+      function(documentId) {
+      return _wA({method:"GET", url:"/" + "app/documents/" + (function(k,v) {return v})("documentId", documentId) + "/writing-options"})
+      }
+   
+_nS('controllers.Import'); _root.controllers.Import.settings = 
+      function(page) {
+      return _wA({method:"GET", url:"/" + "app/import/settings" + _qS([(function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("page", page)])})
+      }
+   
+_nS('controllers.Import'); _root.controllers.Import.preview = 
+      function(file) {
+      return _wA({method:"GET", url:"/" + "app/import/" + (function(k,v) {return v})("file", encodeURIComponent(file)) + "/preview"})
+      }
+   
+_nS('controllers.Import'); _root.controllers.Import.editor = 
+      function(file) {
+      return _wA({method:"GET", url:"/" + "app/import/editor/" + (function(k,v) {return v})("file", encodeURIComponent(file))})
+      }
+   
+_nS('controllers.Import'); _root.controllers.Import.uploaded = 
+      function() {
+      return _wA({method:"POST", url:"/" + "app/import/uploaded"})
+      }
+   
+_nS('controllers.Import'); _root.controllers.Import.check = 
+      function() {
+      return _wA({method:"POST", url:"/" + "app/import/check"})
+      }
+   
+_nS('controllers.Import'); _root.controllers.Import.ask = 
+      function() {
+      return _wA({method:"POST", url:"/" + "app/import/ask"})
+      }
+   
+_nS('controllers.Import'); _root.controllers.Import.remove = 
+      function() {
+      return _wA({method:"POST", url:"/" + "app/import/remove"})
+      }
+   
+_nS('controllers.Export'); _root.controllers.Export.done = 
+      function() {
+      return _wA({method:"POST", url:"/" + "app/export/done"})
+      }
+   
+_nS('controllers.Export'); _root.controllers.Export.ask = 
+      function() {
+      return _wA({method:"POST", url:"/" + "app/export/ask"})
+      }
+   
+_nS('controllers.Previews'); _root.controllers.Previews.create = 
+      function() {
+      return _wA({method:"POST", url:"/" + "previews/new"})
+      }
+   
+_nS('controllers.Previews'); _root.controllers.Previews.save = 
+      function(id) {
+      return _wA({method:"POST", url:"/" + "previews/save/" + (function(k,v) {return v})("id", encodeURIComponent(id))})
+      }
+   
+_nS('controllers.Previews'); _root.controllers.Previews['delete'] = 
+      function(id) {
+      return _wA({method:"POST", url:"/" + "previews/delete/" + (function(k,v) {return v})("id", encodeURIComponent(id))})
+      }
+   
+_nS('controllers.Previews'); _root.controllers.Previews.get = 
+      function() {
+      return _wA({method:"GET", url:"/" + "previews/get"})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.medias = 
+      function(id,versionId,what,where,keywords,lastModified,isMain,limit) {
+      return _wA({method:"GET", url:"/" + "app/medias" + _qS([(id == null ? null : (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("id", id)), (versionId == null ? null : (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("versionId", versionId)), (what == null ? null : (function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("what", what)), (where == null ? null : (function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("where", where)), (keywords == null ? null : (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("keywords", keywords)), (lastModified == null ? null : (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("lastModified", lastModified)), (isMain == null ? null : (function(k,v){return k+'='+(!!v)})("isMain", isMain)), (limit == null ? null : (function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("limit", limit))])})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.newMediaItem = 
+      function(id) {
+      return _wA({method:"POST", url:"/" + "app/medias/" + (function(k,v) {return v})("id", encodeURIComponent(id))})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.mediaItem = 
+      function(id) {
+      return _wA({method:"GET", url:"/" + "app/medias/item/" + (function(k,v) {return v})("id", id)})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.annotateMediaItem = 
+      function(id) {
+      return _wA({method:"POST", url:"/" + "app/medias/" + (function(k,v) {return v})("id", id) + "/annotate"})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.deleteMediaItem = 
+      function(id) {
+      return _wA({method:"DELETE", url:"/" + "app/medias/" + (function(k,v) {return v})("id", encodeURIComponent(id))})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.diff = 
+      function(id,version,section,context) {
+      return _wA({method:"POST", url:"/" + "app/documents/" + (function(k,v) {return v})("id", id) + "/versions/" + (function(k,v) {return v})("version", encodeURIComponent(version)) + "/diff" + _qS([(function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("section", section), (function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("context", context)])})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.listBrokenLinks = 
+      function(id,version,context,action,related) {
+      return _wA({method:"GET", url:"/" + "app/documents/" + (function(k,v) {return v})("id", id) + "/versions/" + (function(k,v) {return v})("version", version) + "/listBrokenLinks" + _qS([(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("context", context), (function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("action", action), (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("related", related)])})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.publishNow = 
+      function(context,id,version,message) {
+      return _wA({method:"POST", url:"/" + "app/documents/" + (function(k,v) {return v})("id", id) + "/versions/" + (function(k,v) {return v})("version", version) + "/publish" + _qS([(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("context", context), (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("message", message)])})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.unpublishNow = 
+      function(context,id,version,message) {
+      return _wA({method:"POST", url:"/" + "app/documents/" + (function(k,v) {return v})("id", id) + "/versions/" + (function(k,v) {return v})("version", version) + "/unpublish" + _qS([(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("context", context), (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("message", message)])})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.stage = 
+      function(context,id,version,addOrDel,release,date,name,overwrittenVersionId,copy) {
+      return _wA({method:"POST", url:"/" + "app/documents/" + (function(k,v) {return v})("id", id) + "/versions/" + (function(k,v) {return v})("version", version) + "/stage" + _qS([(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("context", context), (function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("addOrDel", addOrDel), (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("release", release), (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("date", date), (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("name", name), (overwrittenVersionId == null ? null : (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("overwrittenVersionId", overwrittenVersionId)), (copy == null ? null : (function(k,v){return k+'='+(!!v)})("copy", copy))])})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.archive = 
+      function(context,id,version) {
+      return _wA({method:"POST", url:"/" + "app/documents/" + (function(k,v) {return v})("id", id) + "/versions/" + (function(k,v) {return v})("version", version) + "/archive" + _qS([(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("context", context)])})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.destroy = 
+      function(id,version) {
+      return _wA({method:"POST", url:"/" + "app/documents/" + (function(k,v) {return v})("id", id) + "/versions/" + (function(k,v) {return v})("version", version) + "/destroy"})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.newDocument = 
+      function(context,mask,tags,section,glid,langId) {
+      return _wA({method:"GET", url:"/" + "app/documents/" + (function(k,v) {return v})("mask", encodeURIComponent(mask)) + "/new" + _qS([(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("context", context), (function(k,vs){var l=vs&&vs.length,r=[],i=0;for(;i<l;i++){r[i]=(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,vs[i])}return r.join('&')})("tags", tags), (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("section", section), (function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("glid", glid), (function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("langId", langId)])})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.newTranslation = 
+      function(context,glid,langIdFrom,langIdTo,contextFrom,mode) {
+      return _wA({method:"GET", url:"/" + "app/documents/glid/" + (function(k,v) {return v})("glid", encodeURIComponent(glid)) + "/" + (function(k,v) {return v})("langIdFrom", encodeURIComponent(langIdFrom)) + "/translation/" + (function(k,v) {return v})("langIdTo", encodeURIComponent(langIdTo)) + _qS([(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("context", context), (function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("contextFrom", contextFrom), (mode == null ? null : (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("mode", mode))])})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.createDocument = 
+      function(context,language,groupLangId) {
+      return _wA({method:"POST", url:"/" + "app/documents" + _qS([(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("context", context), (function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("language", language), (groupLangId == null ? null : (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("groupLangId", groupLangId))])})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.updateDisplayName = 
+      function(id) {
+      return _wA({method:"POST", url:"/" + "app/documents/" + (function(k,v) {return v})("id", id) + "/displayName"})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.todo = 
+      function() {
+      return _wA({method:"GET", url:"/" + "todo"})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.repository = 
+      function() {
+      return _wA({method:"GET", url:"/" + "app/settings/repository"})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.saveRepositoryAvatar = 
+      function() {
+      return _wA({method:"POST", url:"/" + "app/settings/repository/avatar"})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.deleteRepositoryAvatar = 
+      function() {
+      return _wA({method:"DELETE", url:"/" + "app/settings/repository/avatar"})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.masks = 
+      function() {
+      return _wA({method:"GET", url:"/" + "app/settings/masks"})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.maskCreation = 
+      function() {
+      return _wA({method:"GET", url:"/" + "app/settings/masks/create"})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.saveMaskLabel = 
+      function(id) {
+      return _wA({method:"POST", url:"/" + "app/settings/masks/" + (function(k,v) {return v})("id", encodeURIComponent(id))})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.createMask = 
+      function() {
+      return _wA({method:"POST", url:"/" + "app/settings/masks"})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.checkMask = 
+      function(maskId,maskName) {
+      return _wA({method:"GET", url:"/" + "app/settings/masks/check" + _qS([(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("maskId", maskId), (function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("maskName", maskName)])})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.maskEditor = 
+      function(id) {
+      return _wA({method:"GET", url:"/" + "app/settings/masks/" + (function(k,v) {return v})("id", encodeURIComponent(id)) + ".json"})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.updateMask = 
+      function(id) {
+      return _wA({method:"POST", url:"/" + "app/settings/masks/" + (function(k,v) {return v})("id", encodeURIComponent(id)) + ".json"})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.collections = 
+      function() {
+      return _wA({method:"GET", url:"/" + "app/settings/collections"})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.updateCollection = 
+      function(id) {
+      return _wA({method:"POST", url:"/" + "app/settings/collections/" + (function(k,v) {return v})("id", encodeURIComponent(id)) + "/filters"})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.moveCollection = 
+      function(id,at) {
+      return _wA({method:"POST", url:"/" + "app/settings/collections/" + (function(k,v) {return v})("id", encodeURIComponent(id)) + "/position" + _qS([(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("at", at)])})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.bookmarks = 
+      function() {
+      return _wA({method:"GET", url:"/" + "app/settings/bookmarks"})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.updateBookmark = 
+      function(id) {
+      return _wA({method:"POST", url:"/" + "app/settings/bookmarks/" + (function(k,v) {return v})("id", encodeURIComponent(id))})
+      }
+   
+_nS('controllers.IntegrationFields'); _root.controllers.IntegrationFields.settings = 
+      function() {
+      return _wA({method:"GET", url:"/" + "app/settings/integrationfields"})
+      }
+   
+_nS('controllers.IntegrationFields'); _root.controllers.IntegrationFields.settingsForm = 
+      function(settingsKind,catalogId) {
+      return _wA({method:"GET", url:"/" + "app/settings/integrationfields/edit" + _qS([(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("settingsKind", settingsKind), (catalogId == null ? null : (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("catalogId", catalogId))])})
+      }
+   
+_nS('controllers.IntegrationFields'); _root.controllers.IntegrationFields['delete'] = 
+      function(catalogId) {
+      return _wA({method:"POST", url:"/" + "app/settings/integrationfields/" + (function(k,v) {return v})("catalogId", encodeURIComponent(catalogId)) + "/delete"})
+      }
+   
+_nS('controllers.IntegrationFields'); _root.controllers.IntegrationFields.sync = 
+      function(catalogId) {
+      return _wA({method:"POST", url:"/" + "app/settings/integrationfields/" + (function(k,v) {return v})("catalogId", encodeURIComponent(catalogId)) + "/sync"})
+      }
+   
+_nS('controllers.IntegrationFields'); _root.controllers.IntegrationFields.catalogsSyncState = 
+      function() {
+      return _wA({method:"GET", url:"/" + "app/settings/integrationfields/syncstate"})
+      }
+   
+_nS('controllers.IntegrationFields'); _root.controllers.IntegrationFields.catalogSyncState = 
+      function(catalogId) {
+      return _wA({method:"GET", url:"/" + "app/settings/integrationfields/syncstate/" + (function(k,v) {return v})("catalogId", encodeURIComponent(catalogId))})
+      }
+   
+_nS('controllers.IntegrationFields'); _root.controllers.IntegrationFields.addPushCustomAPIToken = 
+      function(catalogId) {
+      return _wA({method:"POST", url:"/" + "app/settings/integrationfields/pushcustom/" + (function(k,v) {return v})("catalogId", encodeURIComponent(catalogId)) + "/token"})
+      }
+   
+_nS('controllers.IntegrationFields'); _root.controllers.IntegrationFields.deletePushCustomAPIToken = 
+      function(catalogId,token) {
+      return _wA({method:"DELETE", url:"/" + "app/settings/integrationfields/pushcustom/" + (function(k,v) {return v})("catalogId", encodeURIComponent(catalogId)) + "/delete/" + (function(k,v) {return v})("token", encodeURIComponent(token))})
+      }
+   
+_nS('controllers.IntegrationFields'); _root.controllers.IntegrationFields.getLogs = 
+      function(catalogId,statusCode,nextPage) {
+      return _wA({method:"GET", url:"/" + "app/settings/integrationfields/logs" + _qS([(function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("catalogId", catalogId), (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("statusCode", statusCode), (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("nextPage", nextPage)])})
+      }
+   
+_nS('controllers.IntegrationFields'); _root.controllers.IntegrationFields.getFullLog = 
+      function(catalogId,id) {
+      return _wA({method:"GET", url:"/" + "app/settings/integrationfields/log" + _qS([(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("catalogId", catalogId), (function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("id", id)])})
+      }
+   
+_nS('controllers.IntegrationFields'); _root.controllers.IntegrationFields.getCatalogs = 
+      function() {
+      return _wA({method:"GET", url:"/" + "app/settings/integrationfields/catalogs"})
+      }
+   
+_nS('controllers.Languages'); _root.controllers.Languages.multilanguages = 
+      function() {
+      return _wA({method:"GET", url:"/" + "app/settings/multilanguages"})
+      }
+   
+_nS('controllers.Languages'); _root.controllers.Languages.defineLanguageAsMaster = 
+      function(langId) {
+      return _wA({method:"POST", url:"/" + "app/settings/multilanguages/" + (function(k,v) {return v})("langId", encodeURIComponent(langId)) + "/defineAsMaster"})
+      }
+   
+_nS('controllers.Languages'); _root.controllers.Languages.addLanguages = 
+      function() {
+      return _wA({method:"POST", url:"/" + "app/settings/multilanguages"})
+      }
+   
+_nS('controllers.Languages'); _root.controllers.Languages.addMasterLanguage = 
+      function(langId) {
+      return _wA({method:"POST", url:"/" + "app/settings/multilanguages/" + (function(k,v) {return v})("langId", encodeURIComponent(langId)) + "/createMasterLang"})
+      }
+   
+_nS('controllers.Languages'); _root.controllers.Languages.removeLanguage = 
+      function(langId) {
+      return _wA({method:"POST", url:"/" + "app/settings/multilanguages/" + (function(k,v) {return v})("langId", encodeURIComponent(langId)) + "/delete"})
+      }
+   
+_nS('controllers.Languages'); _root.controllers.Languages.addCustomLanguage = 
+      function(useAsMaster) {
+      return _wA({method:"POST", url:"/" + "app/settings/multilanguages/custom" + _qS([(useAsMaster == null ? null : (function(k,v){return k+'='+(!!v)})("useAsMaster", useAsMaster))])})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.reset = 
+      function() {
+      return _wA({method:"GET", url:"/" + "app/settings/reset"})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.acl = 
+      function() {
+      return _wA({method:"GET", url:"/" + "app/acl"})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.aclMedia = 
+      function(fileNameWithExt) {
+      return _wA({method:"GET", url:"/" + "app/acl-media/" + (function(k,v) {return v})("fileNameWithExt", encodeURIComponent(fileNameWithExt))})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.links = 
+      function(link,preview,context,allowTargetBlank,target) {
+      return _wA({method:"GET", url:"/" + "app/links" + _qS([(function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("link", link), (function(k,v){return v!=null?(function(k,v){return k+'='+(!!v)})(k,v):''})("preview", preview), (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("context", context), (allowTargetBlank == null ? null : (function(k,v){return k+'='+(!!v)})("allowTargetBlank", allowTargetBlank)), (target == null ? null : (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("target", target))])})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.updateProfile = 
+      function(email,profile) {
+      return _wA({method:"POST", url:"/" + "app/settings/users/profiles" + _qS([(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("email", email), (function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("profile", profile)])})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.updateRolesPerLocale = 
+      function(email) {
+      return _wA({method:"POST", url:"/" + "app/settings/users/rolesperlocale" + _qS([(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("email", email)])})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.closeWelcome = 
+      function() {
+      return _wA({method:"DELETE", url:"/" + "app/welcome"})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.oembed = 
+      function(url) {
+      return _wA({method:"GET", url:"/" + "app/oembed" + _qS([(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("url", url)])})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.usersInfo = 
+      function() {
+      return _wA({method:"GET", url:"/" + "app/settings/usersInfo"})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.rolesPerLocale = 
+      function(email) {
+      return _wA({method:"GET", url:"/" + "app/settings/users/rolesperlocale" + _qS([(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("email", email)])})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.rolesPerLocaleProfiles = 
+      function() {
+      return _wA({method:"GET", url:"/" + "app/settings/users/rolesPerLocaleProfiles"})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.transferOwnership = 
+      function() {
+      return _wA({method:"POST", url:"/" + "app/settings/users/transferOwnership"})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.checkUID = 
+      function(id,mask,uid,langId) {
+      return _wA({method:"GET", url:"/" + "app/documents/" + (function(k,v) {return v})("id", encodeURIComponent(id)) + "/check-uid" + _qS([(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("mask", mask), (function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("uid", uid), (function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("langId", langId)])})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.restoreDocument = 
+      function(id,baseVersion,context,language,targetVersionId) {
+      return _wA({method:"POST", url:"/" + "app/documents/" + (function(k,v) {return v})("id", id) + "/versions/" + (function(k,v) {return v})("baseVersion", baseVersion) + "/restore" + _qS([(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("context", context), (function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("language", language), (function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("targetVersionId", targetVersionId)])})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.cloneDocument = 
+      function(context,language,id,version) {
+      return _wA({method:"POST", url:"/" + "app/documents/" + (function(k,v) {return v})("id", id) + "/versions/" + (function(k,v) {return v})("version", version) + "/clone" + _qS([(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("context", context), (function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("language", language)])})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.updateFullname = 
+      function() {
+      return _wA({method:"POST", url:"/" + "app/settings/users/fullname"})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.inviteSomeone = 
+      function() {
+      return _wA({method:"POST", url:"/" + "app/settings/users/invite"})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.removeUser = 
+      function(email) {
+      return _wA({method:"POST", url:"/" + "app/settings/users/remove" + _qS([(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("email", email)])})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.cancelInvitation = 
+      function(email) {
+      return _wA({method:"POST", url:"/" + "app/settings/users/invitations/cancel" + _qS([(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("email", email)])})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.workingVersions = 
+      function(tags,maskIds,authorIds,keywords,language,page,limit) {
+      return _wA({method:"GET", url:"/" + "app/documents/working" + _qS([(function(k,vs){var l=vs&&vs.length,r=[],i=0;for(;i<l;i++){r[i]=(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,vs[i])}return r.join('&')})("tags", tags), (function(k,vs){var l=vs&&vs.length,r=[],i=0;for(;i<l;i++){r[i]=(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,vs[i])}return r.join('&')})("maskIds", maskIds), (function(k,vs){var l=vs&&vs.length,r=[],i=0;for(;i<l;i++){r[i]=(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,vs[i])}return r.join('&')})("authorIds", authorIds), (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("keywords", keywords), (language == null ? null : (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("language", language)), (page == null ? null : (function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("page", page)), (limit == null ? null : (function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("limit", limit))])})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.syncState = 
+      function() {
+      return _wA({method:"GET", url:"/" + "syncState"})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.asset = 
+      function(version,file) {
+      return _wA({method:"GET", url:"/" + "..." + (function(k,v) {return v})("version", encodeURIComponent(version)) + "/" + (function(k,v) {return v})("file", file)})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.confirmAgreement = 
+      function(id) {
+      return _wA({method:"POST", url:"/" + "app/agreements/" + (function(k,v) {return v})("id", encodeURIComponent(id)) + "/accept"})
+      }
+   
+_nS('controllers.Application'); _root.controllers.Application.getRolesPerLocale = 
+      function() {
+      return _wA({method:"GET", url:"/" + "app/user/roles"})
+      }
+   
+_nS('controllers.SlicesGallery'); _root.controllers.SlicesGallery.insertSliceGalleryItem = 
+      function() {
+      return _wA({method:"POST", url:"/" + "app/settings/masks/slices-gallery/insert"})
+      }
+   
+_nS('controllers.SlicesGallery'); _root.controllers.SlicesGallery.updateSliceGalleryItem = 
+      function() {
+      return _wA({method:"POST", url:"/" + "app/settings/masks/slices-gallery/update"})
+      }
+   
+_nS('controllers.SlicesGallery'); _root.controllers.SlicesGallery.removeSliceGalleryItem = 
+      function() {
+      return _wA({method:"POST", url:"/" + "app/settings/masks/slices-gallery/remove"})
+      }
+   
+_nS('controllers.SlicesGallery'); _root.controllers.SlicesGallery.getSlicesByUser = 
+      function() {
+      return _wA({method:"GET", url:"/" + "app/settings/masks/slices-gallery/list"})
+      }
+   
+_nS('controllers.SlicesGallery'); _root.controllers.SlicesGallery.getPredefinedSlices = 
+      function() {
+      return _wA({method:"GET", url:"/" + "app/settings/masks/slices-gallery/templates"})
+      }
+   
+_nS('controllers.SlicesGallery'); _root.controllers.SlicesGallery.diffWithExistingVersion = 
+      function() {
+      return _wA({method:"POST", url:"/" + "app/settings/masks/slices-gallery/diff"})
+      }
+   
+_nS('controllers.Releases'); _root.controllers.Releases.create = 
+      function() {
+      return _wA({method:"POST", url:"/" + "app/releases"})
+      }
+   
+_nS('controllers.Releases'); _root.controllers.Releases.getPermissions = 
+      function(id) {
+      return _wA({method:"GET", url:"/" + "app/releases/" + (function(k,v) {return v})("id", encodeURIComponent(id)) + "/permissions"})
+      }
+   
+_nS('controllers.Releases'); _root.controllers.Releases['delete'] = 
+      function(id) {
+      return _wA({method:"POST", url:"/" + "app/releases/" + (function(k,v) {return v})("id", encodeURIComponent(id)) + "/delete"})
+      }
+   
+_nS('controllers.Releases'); _root.controllers.Releases.rename = 
+      function(id) {
+      return _wA({method:"POST", url:"/" + "app/releases/" + (function(k,v) {return v})("id", encodeURIComponent(id)) + "/rename"})
+      }
+   
+_nS('controllers.Releases'); _root.controllers.Releases.applyNow = 
+      function(id) {
+      return _wA({method:"POST", url:"/" + "app/releases/" + (function(k,v) {return v})("id", encodeURIComponent(id)) + "/apply"})
+      }
+   
+_nS('controllers.Releases'); _root.controllers.Releases.schedule = 
+      function(id) {
+      return _wA({method:"POST", url:"/" + "app/releases/" + (function(k,v) {return v})("id", encodeURIComponent(id)) + "/schedule"})
+      }
+   
+_nS('controllers.Releases'); _root.controllers.Releases.unschedule = 
+      function(id) {
+      return _wA({method:"POST", url:"/" + "app/releases/" + (function(k,v) {return v})("id", encodeURIComponent(id)) + "/unschedule"})
+      }
+   
+_nS('controllers.plan.Plan'); _root.controllers.plan.Plan.repo = 
+      function() {
+      return _wA({method:"GET", url:"/" + "app/settings/plan"})
+      }
+   
+_nS('controllers.plan.Plan'); _root.controllers.plan.Plan.paymentHistory = 
+      function() {
+      return _wA({method:"GET", url:"/" + "app/settings/payment-history"})
+      }
+   
+_nS('controllers.plan.Plan'); _root.controllers.plan.Plan.billingInformations = 
+      function() {
+      return _wA({method:"GET", url:"/" + "app/settings/plan/billing"})
+      }
+   
+_nS('controllers.plan.Plan'); _root.controllers.plan.Plan.updatePlan = 
+      function(planId,token,cardholderName) {
+      return _wA({method:"POST", url:"/" + "app/settings/plan" + _qS([(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("planId", planId), (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("token", token), (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("cardholderName", cardholderName)])})
+      }
+   
+_nS('controllers.plan.Plan'); _root.controllers.plan.Plan.updateCreditCard = 
+      function(token) {
+      return _wA({method:"POST", url:"/" + "app/settings/plan/creditCard" + _qS([(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("token", token)])})
+      }
+   
+_nS('controllers.plan.Plan'); _root.controllers.plan.Plan.current = 
+      function() {
+      return _wA({method:"GET", url:"/" + "app/plan/current"})
+      }
+   
+_nS('controllers.Previews'); _root.controllers.Previews.createSessionForDraft = 
+      function(previewId,document,version) {
+      return _wA({method:"GET", url:"/" + "previews/session/draft" + _qS([(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("previewId", previewId), (function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("document", document), (function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("version", version)])})
+      }
+   
+_nS('controllers.Previews'); _root.controllers.Previews.createSessionForRelease = 
+      function(previewId,id,document) {
+      return _wA({method:"GET", url:"/" + "previews/session/releases/" + (function(k,v) {return v})("id", id) + "/" + (function(k,v) {return v})("previewId", encodeURIComponent(previewId)) + _qS([(document == null ? null : (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("document", document))])})
+      }
+   
+_nS('controllers.Webhook'); _root.controllers.Webhook.index = 
+      function() {
+      return _wA({method:"GET", url:"/" + "app/settings/webhooks"})
+      }
+   
+_nS('controllers.Webhook'); _root.controllers.Webhook.create = 
+      function() {
+      return _wA({method:"POST", url:"/" + "app/settings/webhooks/create"})
+      }
+   
+_nS('controllers.Webhook'); _root.controllers.Webhook.edit = 
+      function(id) {
+      return _wA({method:"POST", url:"/" + "app/settings/webhooks/" + (function(k,v) {return v})("id", encodeURIComponent(id))})
+      }
+   
+_nS('controllers.Webhook'); _root.controllers.Webhook['delete'] = 
+      function(id) {
+      return _wA({method:"POST", url:"/" + "app/settings/webhooks/" + (function(k,v) {return v})("id", encodeURIComponent(id)) + "/delete"})
+      }
+   
+_nS('controllers.Webhook'); _root.controllers.Webhook.trigger = 
+      function(id) {
+      return _wA({method:"POST", url:"/" + "app/settings/webhooks/" + (function(k,v) {return v})("id", encodeURIComponent(id)) + "/trigger"})
+      }
+   
+_nS('controllers.OAuthServer'); _root.controllers.OAuthServer.userQuery = 
+      function(client_id,redirect_uri,scope,code,state) {
+      return _wA({method:"GET", url:"/" + "app/settings/authorizations/confirm" + _qS([(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("client_id", client_id), (function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("redirect_uri", redirect_uri), (scope == null ? null : (function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("scope", scope)), (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("code", code), (function(k,v){return v!=null?(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})(k,v):''})("state", state)])})
+      }
+   
+_nS('controllers.BandwidthUsage'); _root.controllers.BandwidthUsage.retrievePeriods = 
+      function() {
+      return _wA({method:"GET", url:"/" + "bandwidth/usage/retrievePeriods"})
+      }
+   
+_nS('controllers.BandwidthUsage'); _root.controllers.BandwidthUsage.retrieveBwUsage = 
+      function(startDate,endDate) {
+      return _wA({method:"GET", url:"/" + "bandwidth/usage/retrieveBwUsage" + _qS([(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("startDate", startDate), (function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("endDate", endDate)])})
+      }
+   
+_nS('controllers.BandwidthUsage'); _root.controllers.BandwidthUsage.retrieveIntegrationFieldsUsage = 
+      function(startDate,endDate) {
+      return _wA({method:"GET", url:"/" + "bandwidth/usage/retrieveIntegrationFieldsUsage" + _qS([(function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("startDate", startDate), (function(k,v) {return encodeURIComponent(k)+'='+encodeURIComponent(v)})("endDate", endDate)])})
+      }
+   
+_nS('controllers.Billing'); _root.controllers.Billing.getBillingInformation = 
+      function() {
+      return _wA({method:"GET", url:"/" + "billing_service/information"})
+      }
+   
+})(Router)
+          

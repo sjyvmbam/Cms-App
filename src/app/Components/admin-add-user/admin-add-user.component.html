@@ -1,0 +1,70 @@
+<div class="msg" style="margin-top: 20px;">
+
+    <div class="alert alert-success"  *ngIf="successMsg">
+        <p> The User was Successful added</p>
+    </div>
+    
+    <div class="alert alert-danger" *ngIf="errorMsg">
+        <p>The User already exist </p>
+    </div>
+    </div>
+    
+    <h1 class="page-title">Add a User</h1>
+    <a class="btn btn-primary" routerLink="/admin/pages">Back to all User</a>
+    <br><br>
+    
+    <form [formGroup]="adduserForm" (ngSubmit) ="onAddUser()">
+    
+    <div class="form-group">
+    <label for="title">Username:</label>
+    
+    <input type ="text" class="form-control" placeholder="Username" name="username" formControlName="username"
+    minlength="3"
+    required
+    >
+    </div>
+    <div class="alert alert-danger" *ngIf="adduserForm.errors?.required && adduserForm.touched">
+        Username is Required
+    </div> 
+    
+    <div class="alert alert-danger" *ngIf="adduserForm.errors?.minlength && adduserForm.touched">
+        Minimum length is 3
+    </div>
+    
+
+    <div class="form-group">
+        <label for="title">Password:</label>
+        
+        <input type ="password" class="form-control" placeholder="Password" name="password" formControlName="password"
+        minlength="4"
+        required
+        >
+        </div>
+        <div class="alert alert-danger" *ngIf="adduserForm.errors?.required && adduserForm.touched">
+            Password is Required
+        </div> 
+        
+        <div class="alert alert-danger" *ngIf="adduserForm.errors?.minlength && adduserForm.touched">
+            Minimum length is 3
+        </div>
+
+      
+
+        <div class="form-group">
+            <label>Role</label>
+            <select class="form-control"
+                    formControlName="IsAdmin">
+                <option value="">Please select a Role</option>
+                <option *ngFor="let n of role"
+                        [value]="n">{{n}}
+                </option>
+            </select>
+        </div>
+        
+    
+    <div class="form-group">
+        <button [disabled]='!adduserForm.valid' class="btn btn-default">Add a User</button>
+    </div>
+    
+    
+    </form>
