@@ -1,0 +1,78 @@
+
+
+    <div class="msg" style="margin-top: 20px;">
+
+        <div class="alert alert-danger text-center" *ngIf="loginFailled">
+            <p>Invalid Credential </p>
+        </div>
+
+        <div class="alert alert-success text-center" *ngIf="loginSuccess">
+            <p>Login was successfully </p>
+        </div>
+        </div>
+        
+    
+    <section class="Form my-4 mx-5">
+        <div class="container">
+            <div class="row no-gutters">
+                <div class="col-lg-5">
+                    <img src="./assets/img/3e-min.jpg" class="img-fluid">
+                </div>
+                <div class="col-lg-7 px-5 pt-5">
+                    <h1 class="font-weight-bold py-3">Login</h1>
+
+
+                    <form  #loginForm="ngForm" (ngSubmit)="sendLogin()">
+                        <div class="form-row">
+                            <div class="col-lg-7">
+    
+                                <div class="form-group">
+                                    <label for="title">Username:</label>
+                                    <input type ="text" class="form-control my-3 p-4" placeholder="Username"  id="username" name="username" [(ngModel)]="user.username" #username="ngModel"
+                                    minlength="3"
+                                    required
+                                    >
+                                    </div>
+                                    <div class="alert alert-danger" *ngIf="username.errors?.required && username.touched">
+                                        Username is Required
+                                    </div> 
+                                    
+                                    <div class="alert alert-danger" *ngIf="username.errors?.minlength && username.touched">
+                                        Minimum length is 3
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-lg-7">
+                                <div class="form-group">
+                                    <label for="title">Password:</label>
+                                    <input type ="password" class="form-control  my-3 p-4" placeholder="Password" id="password" name="password" [(ngModel)]="user.password" #password="ngModel"
+                                    minlength="4"
+                                    required
+                                    >
+                                    </div>
+                                    <div class="alert alert-danger" *ngIf="password.errors?.required && password.touched">
+                                        Password is Required
+                                    </div> 
+                                    
+                                    <div class="alert alert-danger" *ngIf="password.errors?.minlength && password.touched">
+                                        Minimum length is 3
+                                    </div>
+                            </div>
+                       </div>
+    
+                       <div class="form-row">
+                           <div class="col-lg-7">
+                            <button class="btn1">Login</button>
+                           </div>
+                       </div>
+                       <a href="#">Forgot Password?</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+

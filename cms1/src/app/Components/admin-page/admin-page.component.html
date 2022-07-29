@@ -1,0 +1,40 @@
+<app-navbar></app-navbar>
+
+<app-admin-navbar  *ngIf="front()"></app-admin-navbar>
+<div class="col-xs-12"[class.space]="!front"></div>
+  
+
+<div class="alert alert-success" *ngIf="successMsg">
+    <p>Page was Successful deleted</p>
+</div>
+
+<h1 class="page-title">Pages</h1>
+<a class="btn btn-primary" routerLink="/admin/add-page">Add a Page</a>
+<br><br>
+
+<table class="table">
+    <tr bgcolor="#f9f9f9">
+        <th>Title</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    <tr *ngFor="let page of pages">
+      <td>
+          {{page.title}}
+      </td>
+
+      <td>
+          <a routerLink="/admin/edit-page/{{page.id}}"> <i class="fa fa-edit"> Edit</i>
+
+            </a>
+      </td>
+      
+      <td>
+        <div class="btn btn-danger">
+
+          <a (click)="deletePage(page.id)" routerLink="/admin/pages"> <i class="fa fa-trash" aria-hidden="true" style="color:blue"></i>
+            Delete</a>
+        </div>
+      </td>
+    </tr>
+</table>

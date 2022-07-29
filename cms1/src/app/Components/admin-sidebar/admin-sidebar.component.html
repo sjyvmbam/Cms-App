@@ -1,0 +1,37 @@
+<app-admin-navbar ></app-admin-navbar>
+
+
+<div class="msg" style="margin-top: 20px;">
+
+    <div class="alert alert-success"  *ngIf="succesMsg">
+        <p> Sidebar edited</p>
+    </div>
+   
+    </div>
+    
+    <h1 class="page-title">Edit  sidebar</h1>
+    <a class="btn btn-primary" routerLink="/admin/pages">Back to all pages</a>
+    <br><br>
+    
+    <form [formGroup]="sidebarForm" (ngSubmit) ="editSidebar()">
+    
+    <div class="form-group">
+        <label for="content">Content</label>
+           
+        <ckeditor
+           formControlName="content"
+           id="name"
+           name="name"
+            row="10">
+         </ckeditor>
+    </div>
+
+    <input type="hidden" name="id" formControlName="id">
+    
+    <div class="form-group">
+        <button [disabled]='!sidebarForm.valid' class="btn btn-default">Edit sidebar</button>
+    </div>
+    
+    
+    </form>
+    

@@ -1,0 +1,32 @@
+<mat-nav-list>
+   <div class="logo py-4">
+       <img src="../assets/img/OIP.jpg">
+   </div>
+
+   <mat-divider></mat-divider>
+   <a routerLink="/page/home"><h2 matSubheader class="mt-2">CMS</h2></a>
+   <a mat-list-item routerLink="/home" routerLinkActive="list-item-active">
+      <mat-icon>home</mat-icon>Home
+    </a>
+    <a mat-list-item routerLink="/dashboard" routerLinkActive="list-item-active">
+        <mat-icon>dashboard</mat-icon>Dashboard
+    </a>
+      <a mat-list-item routerLink="/admin/pages">
+        <mat-icon>edit</mat-icon>Manage Pages
+      </a>
+
+      <a mat-list-item routerLink="/admin/sidebar">
+        <mat-icon>edit</mat-icon> Edit Sidebar
+      </a>
+      <a mat-list-item routerLink="/admin/edit/pages">
+        <mat-icon>edit</mat-icon>Standort/Location
+      </a>
+      <a mat-list-item routerLink="/admin/add-user">
+        <mat-icon>edit</mat-icon>Add User
+      </a>
+      <a mat-list-item routerLink="/admin/edit/pages">
+        <mat-icon>help_outline</mat-icon>Frage/Question
+      </a>
+     
+
+</mat-nav-list>

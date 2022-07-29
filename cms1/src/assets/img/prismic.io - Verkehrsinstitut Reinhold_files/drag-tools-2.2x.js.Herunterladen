@@ -1,0 +1,406 @@
+/*! 
+ * jquery.event.drag - v 2.2
+ * Copyright (c) 2010 Three Dub Media - http://threedubmedia.com
+ * Open Source MIT License - http://threedubmedia.com/code/license
+ */
+// Created: 2008-06-04 
+// Updated: 2012-05-21
+// REQUIRES: jquery 1.7.x
+
+// GBO
+// drag -> xdrag
+// drop -> xdrop
+
+;(function( $ ){
+
+// add the jquery instance method
+$.fn.xdrag = function( str, arg, opts ){
+	// figure out the event type
+	var type = typeof str == "string" ? str : "",
+	// figure out the event handler...
+	fn = $.isFunction( str ) ? str : $.isFunction( arg ) ? arg : null;
+	// fix the event type
+	if ( type.indexOf("xdrag") !== 0 ) 
+		type = "xdrag"+ type;
+	// were options passed
+	opts = ( str == fn ? arg : opts ) || {};
+	// trigger or bind event handler
+	return fn ? this.bind( type, opts, fn ) : this.trigger( type );
+};
+
+// local refs (increase compression)
+var $event = $.event, 
+$special = $event.special,
+// configure the xdrag special event 
+xdrag = $special.xdrag = {
+	
+	// these are the default settings
+	defaults: {
+		which: 1, // mouse button pressed to start xdrag sequence
+		distance: 0, // distance xdragged before xdragstart
+		not: ':input', // selector to suppress xdragging on target elements
+		handle: null, // selector to match handle target elements
+		relative: false, // true to use "position", false to use "offset"
+		xdrop: true, // false to suppress xdrop events, true or selector to allow
+		click: false // false to suppress click events after xdragend (no proxy)
+	},
+	
+	// the key name for stored xdrag data
+	datakey: "xdragdata",
+	
+	// prevent bubbling for better performance
+	noBubble: true,
+	
+	// count bound related events
+	add: function( obj ){ 
+		// read the interaction data
+		var data = $.data( this, xdrag.datakey ),
+		// read any passed options 
+		opts = obj.data || {};
+		// count another realted event
+		data.related += 1;
+		// extend data options bound with this event
+		// don't iterate "opts" in case it is a node 
+		$.each( xdrag.defaults, function( key, def ){
+			if ( opts[ key ] !== undefined )
+				data[ key ] = opts[ key ];
+		});
+	},
+	
+	// forget unbound related events
+	remove: function(){
+		$.data( this, xdrag.datakey ).related -= 1;
+	},
+	
+	// configure interaction, capture settings
+	setup: function(){
+		// check for related events
+		if ( $.data( this, xdrag.datakey ) ) 
+			return;
+		// initialize the xdrag data with copied defaults
+		var data = $.extend({ related:0 }, xdrag.defaults );
+		// store the interaction data
+		$.data( this, xdrag.datakey, data );
+		// bind the mousedown event, which starts xdrag interactions
+		$event.add( this, "touchstart mousedown", xdrag.init, data );
+		// prevent image xdragging in IE...
+		if ( this.attachEvent ) 
+			this.attachEvent("onxdragstart", xdrag.dontstart ); 
+	},
+	
+	// destroy configured interaction
+	teardown: function(){
+		var data = $.data( this, xdrag.datakey ) || {};
+		// check for related events
+		if ( data.related ) 
+			return;
+		// remove the stored data
+		$.removeData( this, xdrag.datakey );
+		// remove the mousedown event
+		$event.remove( this, "touchstart mousedown", xdrag.init );
+		// enable text selection
+		xdrag.textselect( true ); 
+		// un-prevent image xdragging in IE...
+		if ( this.detachEvent ) 
+			this.detachEvent("onxdragstart", xdrag.dontstart ); 
+	},
+		
+	// initialize the interaction
+	init: function( event ){ 
+		// sorry, only one touch at a time
+		if ( xdrag.touched ) 
+			return;
+		// the xdrag/xdrop interaction data
+		var dd = event.data, results;
+		// check the which directive
+		if ( event.which != 0 && dd.which > 0 && event.which != dd.which ) 
+			return; 
+		// check for suppressed selector
+		if ( $( event.target ).is( dd.not ) || $( event.target ).closest('[draggable]').length) 
+			return;
+		// check for handle selector
+		if ( dd.handle && !$( event.target ).closest( dd.handle, event.currentTarget ).length ) 
+			return;
+
+		xdrag.touched = event.type == 'touchstart' ? this : null;
+		dd.propagates = 1;
+		dd.mousedown = this;
+		dd.interactions = [ xdrag.interaction( this, dd ) ];
+		dd.target = event.target;
+		dd.pageX = event.pageX;
+		dd.pageY = event.pageY;
+		dd.xdragging = null;
+		// handle xdraginit event... 
+		results = xdrag.hijack( event, "xdraginit", dd );
+		// early cancel
+		if ( !dd.propagates )
+			return;
+		// flatten the result set
+		results = xdrag.flatten( results );
+		// insert new interaction elements
+		if ( results && results.length ){
+			dd.interactions = [];
+			$.each( results, function(){
+				dd.interactions.push( xdrag.interaction( this, dd ) );
+			});
+		}
+		// remember how many interactions are propagating
+		dd.propagates = dd.interactions.length;
+		// locate and init the xdrop targets
+		if ( dd.xdrop !== false && $special.xdrop ) 
+			$special.xdrop.handler( event, dd );
+		// disable text selection
+		xdrag.textselect( false ); 
+		// bind additional events...
+		if ( xdrag.touched )
+			$event.add( xdrag.touched, "touchmove touchend", xdrag.handler, dd );
+		else 
+			$event.add( document, "mousemove mouseup", xdrag.handler, dd );
+		// helps prevent text selection or scrolling
+		if ( !xdrag.touched || dd.live )
+			return false;
+	},	
+	
+	// returns an interaction object
+	interaction: function( elem, dd ){
+		var offset = $( elem )[ dd.relative ? "position" : "offset" ]() || { top:0, left:0 };
+		return {
+			xdrag: elem, 
+			callback: new xdrag.callback(), 
+			xdroppable: [],
+			offset: offset
+		};
+	},
+	
+	// handle xdrag-releatd DOM events
+	handler: function( event ){ 
+		// read the data before hijacking anything
+		var dd = event.data;	
+		// handle various events
+		switch ( event.type ){
+			// mousemove, check distance, start xdragging
+			case !dd.xdragging && 'touchmove': 
+				event.preventDefault();
+			case !dd.xdragging && 'mousemove':
+				//  xdrag tolerance, xÂ² + yÂ² = distanceÂ²
+				if ( Math.pow(  event.pageX-dd.pageX, 2 ) + Math.pow(  event.pageY-dd.pageY, 2 ) < Math.pow( dd.distance, 2 ) ) 
+					break; // distance tolerance not reached
+				event.target = dd.target; // force target from "mousedown" event (fix distance issue)
+				xdrag.hijack( event, "xdragstart", dd ); // trigger "xdragstart"
+				if ( dd.propagates ) // "xdragstart" not rejected
+					dd.xdragging = true; // activate interaction
+			// mousemove, xdragging
+			case 'touchmove':
+				event.preventDefault();
+			case 'mousemove':
+				if ( dd.xdragging ){
+					// trigger "xdrag"		
+					xdrag.hijack( event, "xdrag", dd );
+					if ( dd.propagates ){
+						// manage xdrop events
+						if ( dd.xdrop !== false && $special.xdrop )
+							$special.xdrop.handler( event, dd ); // "xdropstart", "xdropend"							
+						break; // "xdrag" not rejected, stop		
+					}
+					event.type = "mouseup"; // helps "xdrop" handler behave
+				}
+			// mouseup, stop xdragging
+			case 'touchend': 
+			case 'mouseup': 
+			default:
+				if ( xdrag.touched )
+					$event.remove( xdrag.touched, "touchmove touchend", xdrag.handler ); // remove touch events
+				else 
+					$event.remove( document, "mousemove mouseup", xdrag.handler ); // remove page events	
+				if ( dd.xdragging ){
+					if ( dd.xdrop !== false && $special.xdrop )
+						$special.xdrop.handler( event, dd ); // "xdrop"
+					xdrag.hijack( event, "xdragend", dd ); // trigger "xdragend"	
+				}
+				xdrag.textselect( true ); // enable text selection
+				// if suppressing click events...
+				if ( dd.click === false && dd.xdragging )
+					$.data( dd.mousedown, "suppress.click", new Date().getTime() + 5 );
+				dd.xdragging = xdrag.touched = false; // deactivate element	
+				break;
+		}
+	},
+		
+	// re-use event object for custom events
+	hijack: function( event, type, dd, x, elem ){
+		// not configured
+		if ( !dd ) 
+			return;
+		// remember the original event and type
+		var orig = { event:event.originalEvent, type:event.type },
+		// is the event xdrag related or drog related?
+		mode = type.indexOf("xdrop") ? "xdrag" : "xdrop",
+		// iteration vars
+		result, i = x || 0, ia, $elems, callback,
+		len = !isNaN( x ) ? x : dd.interactions.length;
+		// modify the event type
+		event.type = type;
+		// remove the original event
+		event.originalEvent = null;
+		// initialize the results
+		dd.results = [];
+		// handle each interacted element
+		do if ( ia = dd.interactions[ i ] ){
+			// validate the interaction
+			if ( type !== "xdragend" && ia.cancelled )
+				continue;
+			// set the xdragxdrop properties on the event object
+			callback = xdrag.properties( event, dd, ia );
+			// prepare for more results
+			ia.results = [];
+			// handle each element
+			$( elem || ia[ mode ] || dd.xdroppable ).each(function( p, subject ){
+				// identify xdrag or xdrop targets individually
+				callback.target = subject;
+				// force propagtion of the custom event
+				event.isPropagationStopped = function(){ return false; };
+				// handle the event	
+				result = subject ? $event.dispatch.call( subject, event, callback ) : null;
+				// stop the xdrag interaction for this element
+				if ( result === false ){
+					if ( mode == "xdrag" ){
+						ia.cancelled = true;
+						dd.propagates -= 1;
+					}
+					if ( type == "xdrop" ){
+						ia[ mode ][p] = null;
+					}
+				}
+				// assign any xdropinit elements
+				else if ( type == "xdropinit" )
+					ia.xdroppable.push( xdrag.element( result ) || subject );
+				// accept a returned proxy element 
+				if ( type == "xdragstart" )
+					ia.proxy = $( xdrag.element( result ) || ia.xdrag )[0];
+				// remember this result	
+				ia.results.push( result );
+				// forget the event result, for recycling
+				delete event.result;
+				// break on cancelled handler
+				if ( type !== "xdropinit" )
+					return result;
+			});	
+			// flatten the results	
+			dd.results[ i ] = xdrag.flatten( ia.results );	
+			// accept a set of valid xdrop targets
+			if ( type == "xdropinit" )
+				ia.xdroppable = xdrag.flatten( ia.xdroppable );
+			// locate xdrop targets
+			if ( type == "xdragstart" && !ia.cancelled )
+				callback.update(); 
+		}
+		while ( ++i < len )
+		// restore the original event & type
+		event.type = orig.type;
+		event.originalEvent = orig.event;
+		// return all handler results
+		return xdrag.flatten( dd.results );
+	},
+		
+	// extend the callback object with xdrag/xdrop properties...
+	properties: function( event, dd, ia ){		
+		var obj = ia.callback;
+		// elements
+		obj.xdrag = ia.xdrag;
+		obj.proxy = ia.proxy || ia.xdrag;
+		// starting mouse position
+		obj.startX = dd.pageX;
+		obj.startY = dd.pageY;
+		// current distance xdragged
+		obj.deltaX = event.pageX - dd.pageX;
+		obj.deltaY = event.pageY - dd.pageY;
+		// original element position
+		obj.originalX = ia.offset.left;
+		obj.originalY = ia.offset.top;
+		// adjusted element position
+		obj.offsetX = obj.originalX + obj.deltaX; 
+		obj.offsetY = obj.originalY + obj.deltaY;
+		// assign the xdrop targets information
+		obj.xdrop = xdrag.flatten( ( ia.xdrop || [] ).slice() );
+		obj.available = xdrag.flatten( ( ia.xdroppable || [] ).slice() );
+		return obj;	
+	},
+	
+	// determine is the argument is an element or jquery instance
+	element: function( arg ){
+		if ( arg && ( arg.jquery || arg.nodeType == 1 ) )
+			return arg;
+	},
+	
+	// flatten nested jquery objects and arrays into a single dimension array
+	flatten: function( arr ){
+		return $.map( arr, function( member ){
+			return member && member.jquery ? $.makeArray( member ) : 
+				member && member.length ? xdrag.flatten( member ) : member;
+		});
+	},
+	
+	// toggles text selection attributes ON (true) or OFF (false)
+	textselect: function( bool ){ 
+		$( document )[ bool ? "unbind" : "bind" ]("selectstart", xdrag.dontstart )
+			.css("MozUserSelect", bool ? "" : "none" );
+		// .attr("unselectable", bool ? "off" : "on" )
+		document.unselectable = bool ? "off" : "on"; 
+	},
+	
+	// suppress "selectstart" and "onxdragstart" events
+	dontstart: function(){ 
+		return false; 
+	},
+	
+	// a callback instance contructor
+	callback: function(){}
+	
+};
+
+// callback methods
+xdrag.callback.prototype = {
+	update: function(){
+		if ( $special.xdrop && this.available.length )
+			$.each( this.available, function( i ){
+				$special.xdrop.locate( this, i );
+			});
+	}
+};
+
+// patch $.event.$dispatch to allow suppressing clicks
+var $dispatch = $event.dispatch;
+$event.dispatch = function( event ){
+	if ( $.data( this, "suppress."+ event.type ) - new Date().getTime() > 0 ){
+		$.removeData( this, "suppress."+ event.type );
+		return;
+	}
+	return $dispatch.apply( this, arguments );
+};
+
+// event fix hooks for touch events...
+var touchHooks = 
+$event.fixHooks.touchstart = 
+$event.fixHooks.touchmove = 
+$event.fixHooks.touchend =
+$event.fixHooks.touchcancel = {
+	props: "clientX clientY pageX pageY screenX screenY".split( " " ),
+	filter: function( event, orig ) {
+		if ( orig ){
+			var touched = ( orig.touches && orig.touches[0] )
+				|| ( orig.changedTouches && orig.changedTouches[0] )
+				|| null; 
+			// iOS webkit: touchstart, touchmove, touchend
+			if ( touched ) 
+				$.each( touchHooks.props, function( i, prop ){
+					event[ prop ] = touched[ prop ];
+				});
+		}
+		return event;
+	}
+};
+
+// share the same special event configuration with related events...
+$special.xdraginit = $special.xdragstart = $special.xdragend = xdrag;
+
+})( jQuery );
